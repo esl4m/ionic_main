@@ -1,0 +1,7 @@
+{
+  "name": "move-it",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonSlides } from '@ionic/angular';
+import { INTRO_KEY } from 'src/app/guards/intro.guard';
+import { Router } from '@angular/router';
+import { Plugins } from '@capacitor/core';
+
+const { Storage } = Plugins;
 
 @Component({
   selector: 'app-intro',
@@ -7,9 +13,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IntroPage implements OnInit {
 
-  constructor() { }
+  @ViewChild(IonSlides)slides: IonSlides;
+
+  constructor( private router: Router ) { }
 
   ngOnInit() {
   }
 
+  next() {
+    this.slides.slideNext();
+  }
+
+  async start() {
+    await Storage.set({key: INTRO_KEY, value: 'true'});
+    this.router.navigateByUrl('/login', { replaceUrl:true });
+  }
 }

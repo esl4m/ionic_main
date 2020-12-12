@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { User } from './user';
  
 import { Plugins } from '@capacitor/core';
 const { Storage } = Plugins;
@@ -16,6 +18,7 @@ export class AuthService {
   // Init with null to filter out the first value in a guard!
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   token = '';
+  AUTH_SERVER_ADDRESS: string = environment.apiURL;
 
   constructor( private http: HttpClient ) {
     this.loadToken();
@@ -32,8 +35,8 @@ export class AuthService {
     }
   }
  
-  login(credentials: {email, password}): Observable<any> {
-    return this.http.post(`https://localhost:8001/login`, credentials).pipe(
+  login(credentials: User): Observable<any> {
+    return this.http.post(`${this.AUTH_SERVER_ADDRESS}/login`, credentials).pipe(
       map((data: any) => data.token),
       switchMap(token => {
         return from(Storage.set({key: TOKEN_KEY, value: token}));

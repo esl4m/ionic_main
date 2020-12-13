@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { map, tap, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User } from './user';
+import { User } from  './user';
+import { AuthResponse } from  './auth-response';
  
 import { Plugins } from '@capacitor/core';
 const { Storage } = Plugins;
@@ -25,9 +26,8 @@ export class AuthService {
   }
 
   async loadToken() {
-    const token = await Storage.get({ key: TOKEN_KEY });    
+    const token = await Storage.get({ key: TOKEN_KEY });
     if (token && token.value) {
-      console.log('set token: ', token.value);
       this.token = token.value;
       this.isAuthenticated.next(true);
     } else {
@@ -35,13 +35,12 @@ export class AuthService {
     }
   }
  
-  login(credentials: User): Observable<any> {
-    return this.http.post(`${this.AUTH_SERVER_ADDRESS}/login`, credentials).pipe(
-      map((data: any) => data.token),
-      switchMap(token => {
-        return from(Storage.set({key: TOKEN_KEY, value: token}));
-      }),
-      tap(_ => {
+  login(user: User): Observable<AuthResponse> {
+    return this.http.post(`${this.AUTH_SERVER_ADDRESS}/login`, user).pipe(
+      tap(async (res : AuthResponse) => {
+        Storage.set({ key: TOKEN_KEY, value: res.user.access_token })
+        Storage.set({ key: "name", value: res.user.name })
+        Storage.set({ key: "email", value: res.user.email })
         this.isAuthenticated.next(true);
       })
     )

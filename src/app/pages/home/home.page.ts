@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+
+import { Plugins } from '@capacitor/core';
+const { Storage } = Plugins;
 
 @Component({
   selector: 'app-home',
@@ -7,9 +11,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePage implements OnInit {
 
-  constructor() { }
+  userName: any;
+  // userEmail: any;
+
+  constructor(
+    private authService: AuthService,
+  ) { }
 
   ngOnInit() {
+    this.getUserData();
   }
 
+  getUserData() {
+    if (this.authService.isAuthenticated){
+      Storage.get({ key: "name" }).then((val) => {
+        this.userName = val.value;
+      });
+    }
+    else {
+      console.log('logged out !');
+    }
+  }
 }

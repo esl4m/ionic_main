@@ -8,8 +8,12 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div id="container">
-    <strong class="capitalize"> Hello </strong>
+  <div id="container" *ngIf="userName">
+    <strong class="capitalize"> Hello {{ userName }} </strong>
     <p>Welcome to Move-it app</p>
+  </div>
+  <div *ngIf="userName == null" class="ion-text-center">
+    <strong class="capitalize"> Hello Guest ! </strong>
+    <p>Please <a routerLink='/login'>Login</a> to see our service</p>
   </div>
 </ion-content>

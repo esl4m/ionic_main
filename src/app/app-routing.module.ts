@@ -27,11 +27,16 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
-    canLoad: [AuthGuard]
+    canLoad: [AuthGuard]  // must be logged in to see this page.
   },
   {
     path: 'logout',
     loadChildren: () => import('./pages/logout/logout.module').then( m => m.LogoutPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule),
+    canLoad: [AutoLoginGuard]  
   }
 ];
 

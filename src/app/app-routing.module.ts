@@ -37,6 +37,11 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule),
     canLoad: [AutoLoginGuard]  
+  },
+  {
+    path: 'jobs',
+    loadChildren: () => import('./pages/jobs/jobs.module').then( m => m.JobsPageModule),
+    canLoad: [AuthGuard]
   }
 ];
 

@@ -46,7 +46,19 @@ export class AuthService {
       })
     )
   }
- 
+
+  register(credentials: User): Observable<any> {
+    return this.http.post(`${this.AUTH_SERVER_ADDRESS}/register`, credentials).pipe(
+      map((data: any) => data.token),
+      switchMap(token => {
+        return from(Storage.set({key: TOKEN_KEY, value: token}));
+      }),
+      tap(_ => {
+        // this.isAuthenticated.next(true);
+      })
+    )
+  }
+
   logout(): Promise<void> {
     this.isAuthenticated.next(false);
     return Storage.remove({key: TOKEN_KEY});

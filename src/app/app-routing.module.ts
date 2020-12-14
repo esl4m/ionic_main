@@ -42,6 +42,10 @@ const routes: Routes = [
     path: 'jobs',
     loadChildren: () => import('./pages/jobs/jobs.module').then( m => m.JobsPageModule),
     canLoad: [AuthGuard]
+  },
+  {
+    path: 'modal',
+    loadChildren: () => import('./pages/modal/modal.module').then( m => m.ModalPageModule)
   }
 ];
 

@@ -41,6 +41,7 @@ export class AuthService {
         Storage.set({ key: TOKEN_KEY, value: res.user.access_token })
         Storage.set({ key: "name", value: res.user.name })
         Storage.set({ key: "email", value: res.user.email })
+        Storage.set({ key: "role", value: res.user.role })
         this.isAuthenticated.next(true);
       })
     )

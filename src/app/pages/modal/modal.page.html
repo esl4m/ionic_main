@@ -27,6 +27,17 @@
       </ion-col>
     </ion-row>
     <ion-row>
+      <ion-col>
+        Hi {{role}}
+        <div *ngIf="roleDriver">
+          here is driver !!
+        </div>
+      </ion-col>
+      <ion-col *ngIf="roleUser">
+        now is user !
+      </ion-col>
+    </ion-row>
+    <ion-row>
       <ion-col class="ion-text-center">
         <ion-button color="danger" (click)="closeModal()">Close</ion-button>
       </ion-col>

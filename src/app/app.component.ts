@@ -23,8 +23,8 @@ export class AppComponent implements OnInit {
       icon: 'code-working'
     },
     {
-      title: 'Inbox',
-      url: '/folder/Inbox',
+      title: 'Messages',
+      url: '/messages',
       icon: 'mail'
     },
     {

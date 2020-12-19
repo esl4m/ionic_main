@@ -45,7 +45,13 @@ const routes: Routes = [
   },
   {
     path: 'modal',
-    loadChildren: () => import('./pages/modal/modal.module').then( m => m.ModalPageModule)
+    loadChildren: () => import('./pages/modal/modal.module').then( m => m.ModalPageModule),
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'messages',
+    loadChildren: () => import('./pages/messages/messages.module').then( m => m.MessagesPageModule),
+    canLoad: [AuthGuard]
   }
 ];
 

@@ -61,6 +61,7 @@ export class AuthService {
 
   logout(): Promise<void> {
     this.isAuthenticated.next(false);
+    Storage.remove({key: 'name'});
     return Storage.remove({key: TOKEN_KEY});
   }
 }
